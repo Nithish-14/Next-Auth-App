@@ -53,7 +53,7 @@ export const authOptions = {
                 }
             }
         }),
-    ] as Provider[],
+    ]  as Provider[],
     secret: process.env.NEXTAUTH_SECRET,
     session: {
         strategy: "jwt",
@@ -65,6 +65,8 @@ export const authOptions = {
 }
 
 export default NextAuth(authOptions)
+
+
 
 
 

@@ -6,17 +6,20 @@ import {getServerSession} from "next-auth";
 import { authOptions } from '@/pages/api/auth/[...nextauth]'
 
 export default function Ssr({session}) {
+
+    console.log(session)
+
     return (
         <div style={{height: 60, background: "white", padding: 10}}>
-            {session.data && <div style={{display: "flex", justifyContent: "space-between"}}>
+            {session && <div style={{display: "flex", justifyContent: "space-between"}}>
                 <Typography variant={"h4"} style={{color: "black"}}>
-                    {session.data.user?.email}
+                    {session.user.email}
                 </Typography>
                 <div>
                     <Button variant={"contained"} onClick={() => signOut()}>Logout</Button>
                 </div>
             </div>}
-            {!session.data && <div style={{display: "flex", justifyContent: "space-between"}}>
+            {!session && <div style={{display: "flex", justifyContent: "space-between"}}>
                 <Typography variant={"h4"} style={{color: "black"}}>
                     Coursera
                 </Typography>
@@ -39,10 +42,16 @@ export async function getServerSideProps(context) {
             },
         }
     }
+    
+ 
 
     return {
         props: {
-            session,
+            session: {
+                user: {
+                    email: session.user?.email
+                }
+            }
         },
     }
 }
